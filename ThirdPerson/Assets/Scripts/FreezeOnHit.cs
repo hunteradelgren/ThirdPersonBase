@@ -24,23 +24,13 @@ public class FreezeOnHit : MonoBehaviour
         {
             rb.velocity = Vector3.zero;
             rb.isKinematic = false;
-            rb.transform.parent = collision.gameObject.transform;
-            if(collision.gameObject.tag == "Enemy")
+            rb.constraints = RigidbodyConstraints.FreezeAll;
+            if (collision.gameObject.tag == "Enemy")
             {
-                collision.gameObject.GetComponent<Animator>().StopPlayback();
+                collision.gameObject.GetComponent<Animator>().speed = 0;
+                collision.gameObject.GetComponent<EnemyController>().moveSpeed = 0;
             }
         }
         
-    }
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.tag !="Player")
-        {
-            if (collision.gameObject.tag == "Enemy")
-            {
-                collision.gameObject.GetComponent<Animator>().StartPlayback();
-            }
-        }
-
     }
 }

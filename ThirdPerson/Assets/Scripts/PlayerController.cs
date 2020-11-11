@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     GameObject swordModel;
 
+    public GameObject enemy;
+
     public CinemachineFreeLook normal;
     public CinemachineFreeLook aiming;
 
@@ -62,7 +64,7 @@ public class PlayerController : MonoBehaviour
         camRight.Normalize();
 
         var moveDirection = (camForward * v * moveSpeed) + (camRight * h * moveSpeed);
-
+        
         transform.LookAt(transform.position + moveDirection);
         rb.velocity = new Vector3(moveDirection.x, rb.velocity.y, moveDirection.z);
 
@@ -82,6 +84,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetButton("Aiming"))
         {
             aiming.Priority = 25;
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(new Vector3(0, mainCamera.eulerAngles.y, 0)), 180);
         }
         else
         {
@@ -100,16 +103,14 @@ public class PlayerController : MonoBehaviour
             else if (isThrown && !isReturning)
             {
                 Debug.Log("Return Sword");
-                sb.transform.parent = null;
                 isThrown = false;
                 isReturning = true;
                 TurnOffSwordCollider();
+                sb.constraints = RigidbodyConstraints.None;
                 ReturnSword();
             }
 
         }
-
-        //if(isThrown && swordCollider)
 
         if (isReturning)
         {
@@ -120,6 +121,10 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
+
+                enemy.GetComponent<Animator>().speed = 1;
+                enemy.GetComponent<EnemyController>().moveSpeed = 1;
+                sb.isKinematic = true;
                 ResetSword();
             }
         }
@@ -150,10 +155,12 @@ public class PlayerController : MonoBehaviour
     public void TurnOnSwordCollider()
     {
         swordCollider.enabled = true;
+        sb.detectCollisions = true;
     }
 
     public void TurnOffSwordCollider()
     {
+        sb.detectCollisions = false;
         swordCollider.enabled = false;
     }
     public void ThrowSword()
@@ -164,25 +171,22 @@ public class PlayerController : MonoBehaviour
         sb.AddTorque(sb.transform.TransformDirection(Vector3.right) * 100, ForceMode.Impulse);
     }
 
-    public void SwordThrowHit()
-    {
-        
-    }
 
     public void ReturnSword()
     {
         sb.velocity = Vector3.zero;
-        sb.isKinematic = true;
+        sb.AddTorque(sb.transform.TransformDirection(Vector3.right) * 100, ForceMode.Impulse);
         thrownPosition = sb.position;
     }
 
     public void ResetSword()
     {
+        TurnOnSwordCollider();
         sb.velocity = Vector3.zero;
         sb.isKinematic = true;
         isReturning = false;
         swordModel.transform.parent = target;
-        sb.position = target.position;
+        sb.position = new Vector3(target.position.x,target.position.y + 2f, target.position.z + 1.8f);
         swordModel.transform.rotation = initialRotation.rotation;
     }
 

@@ -5,8 +5,7 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     [Header("Movement Variables")]
-    [SerializeField]
-    float moveSpeed = 1.0f;
+    public float moveSpeed = 1.0f;
     [SerializeField]
     float meleeRange = 1.0f;
     [SerializeField]

@@ -439,6 +439,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &429169757 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1708298882722571695, guid: 7b906e0adb50b824eb72c13977cd9d83, type: 3}
+  m_PrefabInstance: {fileID: 869915730}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &483344453
 GameObject:
   m_ObjectHideFlags: 3
@@ -1123,7 +1128,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 647119316}
-  m_LocalRotation: {x: -0.16097985, y: -0.15670164, z: -0.025896683, w: 0.9740942}
+  m_LocalRotation: {x: -0.16097987, y: -0.15670168, z: -0.025896689, w: 0.9740942}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -2070,7 +2075,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 933375109}
-  m_LocalRotation: {x: 0.07662972, y: 0.13434286, z: -0.012055865, w: 0.987894}
+  m_LocalRotation: {x: 0.07662975, y: 0.13434286, z: -0.012055868, w: 0.987894}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -2558,7 +2563,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1205585757}
-  m_LocalRotation: {x: -0.0026179012, y: -0.13386425, z: -0.00035362734, w: 0.9909962}
+  m_LocalRotation: {x: -0.002617901, y: -0.13386428, z: -0.0003536275, w: 0.9909962}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -2758,7 +2763,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1377996843}
-  m_LocalRotation: {x: 0.104324006, y: 0.32460302, z: -0.033326223, w: 0.9394886}
+  m_LocalRotation: {x: 0.10432398, y: 0.32460302, z: -0.033326216, w: 0.9394886}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -3982,6 +3987,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 3250335846897541064, guid: 4cc9e7b1db2e4d44ba0faaedd17c8373, type: 3}
+      propertyPath: enemy
+      value: 
+      objectReference: {fileID: 429169757}
     - target: {fileID: 3250335846897541064, guid: 4cc9e7b1db2e4d44ba0faaedd17c8373, type: 3}
       propertyPath: aiming
       value: 
