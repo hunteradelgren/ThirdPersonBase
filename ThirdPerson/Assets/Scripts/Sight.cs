@@ -7,7 +7,7 @@ public class Sight : MonoBehaviour
     [SerializeField]
     float degreesOfSight = 360.0f;
     [SerializeField]
-    float sightDistance = 20.0f;
+    float sightDistance = 200.0f;
     [SerializeField]
     int numberOfDivisions = 180;
 

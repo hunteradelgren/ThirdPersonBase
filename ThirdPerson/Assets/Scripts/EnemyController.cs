@@ -21,6 +21,9 @@ public class EnemyController : MonoBehaviour
     [SerializeField]
     Sight obstacleSight;
 
+    public GameObject portal1;
+    public GameObject portal2;
+
     Vector3 goalLocation;
     Vector3 currentTargetLocation;
     bool shouldMove = false;
@@ -30,6 +33,8 @@ public class EnemyController : MonoBehaviour
     bool blocked = false;
     float timeSinceHit = 0;
     bool foundAppropriate = false;
+
+    float timeSinceShot = 0;
 
     // Start is called before the first frame update
     void Awake()
@@ -45,6 +50,7 @@ public class EnemyController : MonoBehaviour
             return;
 
         timeSinceHit += Time.deltaTime;
+        timeSinceShot += Time.deltaTime;
 
         goalLocation = FindObjectOfType<PlayerController>().transform.position;
 
@@ -62,11 +68,22 @@ public class EnemyController : MonoBehaviour
                 // we've got something blocking us
                 blocked = true;
             }
-
+            if(current.seen == true && current.tag == "Player" && timeSinceShot >= 2)
+            {
+                Debug.Log("Player was Shot");
+                player.playerHit();
+                timeSinceShot = 0;
+            }
         }
 
         Debug.Log(blocked);
+        double distancetoGoal = Vector3.Distance(transform.position, goalLocation);
+        double disP1toP2toGoal = Vector3.Distance(transform.position, portal1.transform.position)
+            + Vector3.Distance(portal2.transform.position, goalLocation);
+        double disP2toP1toGoal = Vector3.Distance(transform.position, portal2.transform.position)
+            + Vector3.Distance(portal1.transform.position, goalLocation);
 
+        Debug.Log("to player: " + distancetoGoal + "\ndisp1top2toGoal: " + disP1toP2toGoal + "\ndisp2top1toGoal" + disP2toP1toGoal);
         // if we're blocked, find the first sight that isn't obstructed and head that way
         if (blocked)
         {
@@ -80,19 +97,40 @@ public class EnemyController : MonoBehaviour
                 HandleBlocked(directlyInFront);
                 timeSinceChecked = 0;
             }*/
-
-            if (Vector3.Distance(transform.position, currentTargetLocation) < meleeRange)
+            
+            
+            if (distancetoGoal < meleeRange)
             {
+                Debug.Log("target in range");
                 blocked = false;
                 currentTargetLocation = goalLocation;
                 //goalLocation = Vector3.zero;
             }
+            blocked = false;
         }
 
         else
         {
-            currentTargetLocation = goalLocation;
-            foundAppropriate = false;
+            if (disP1toP2toGoal < distancetoGoal || disP2toP1toGoal < distancetoGoal)
+            {
+                blocked = false;
+                if (Vector3.Distance(transform.position, portal1.transform.position) < Vector3.Distance(transform.position, portal2.transform.position))
+                {
+                    Debug.Log("target portal 1");
+                    currentTargetLocation = portal1.transform.position;
+                }
+                else
+                {
+                    Debug.Log("target portal 2");
+                    currentTargetLocation = portal2.transform.position;
+                }
+            }
+            else
+            {
+                Debug.Log("target player");
+                currentTargetLocation = goalLocation;
+                foundAppropriate = false;
+            }
         }
 
         timeSinceChecked += Time.deltaTime;

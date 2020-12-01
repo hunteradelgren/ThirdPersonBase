@@ -14,6 +14,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     BoxCollider swordCollider;
 
+    public GameObject portal1;
+    public GameObject portal2;
+
     Rigidbody rb;
     Animator anim;
 
@@ -59,7 +62,47 @@ public class PlayerController : MonoBehaviour
             timeSinceButtonPressed = 0;
         }
 
+        if (Input.GetButtonDown("Fire1"))
+        {
+            shootPortal1();
+        }
+
+        if (Input.GetButtonDown("Fire2"))
+        {
+            shootPortal2();
+        }
+
         timeSinceButtonPressed += Time.deltaTime;
+    }
+    public void playerHit()
+    {
+        anim.SetTrigger("damageTaken");
+    }
+    public void shootPortal1()
+    {
+        Ray r = new Ray(mainCamera.position, mainCamera.forward);
+        RaycastHit hit;
+        if (Physics.Raycast(r, out hit, 500))
+        {
+                portal1.transform.position = hit.point;
+                portal1.transform.rotation = Quaternion.FromToRotation(Vector3.forward,-hit.normal);
+            
+            Debug.DrawRay(mainCamera.position, mainCamera.forward * 100, Color.green, 10);
+            Debug.Log("Hit");
+        }
+    }
+    public void shootPortal2()
+    {
+        Ray r = new Ray(mainCamera.position, mainCamera.forward);
+        RaycastHit hit;
+        if (Physics.Raycast(r, out hit, 500))
+        {
+            portal2.transform.position = hit.point;
+            portal2.transform.rotation = Quaternion.FromToRotation(Vector3.forward, -hit.normal);
+
+            Debug.DrawRay(mainCamera.position, mainCamera.forward * 100, Color.green, 10);
+            Debug.Log("Hit");
+        }
     }
 
     public void PotentialComboEnd()
